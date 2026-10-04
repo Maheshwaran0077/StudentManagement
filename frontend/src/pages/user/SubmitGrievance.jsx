@@ -106,10 +106,14 @@ export default function SubmitGrievance() {
                 className="input" placeholder="e.g. Block B, Lab 3" />
             </div>
             <div>
-              <label className="label">Department</label>
+              <label className="label">Department (optional)</label>
               <select name="department" value={form.department} onChange={handleChange} className="input">
-                <option value="">Select department</option>
-                {departments.map(d => <option key={d._id} value={d._id}>{d.name}</option>)}
+                <option value="">— Not specified —</option>
+                {departments.map(d => (
+                  <option key={d._id} value={d._id}>
+                    {d.code} — {d.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

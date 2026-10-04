@@ -12,11 +12,17 @@ const submitGrievance = async (req, res) => {
     } = req.body;
 
     const grievanceData = {
-      title, description, category, subCategory,
-      location, department, severity: severity || 'medium',
+      title,
+      description,
+      category,
+      subCategory: subCategory || undefined,
+      location: location || undefined,
+      // Only include department if a real ObjectId was provided — empty string causes BSONError
+      ...(department && department.trim() !== '' && { department }),
+      severity: severity || 'medium',
       isAnonymous: !!isAnonymous,
       stakeholderGroup: stakeholderGroup || req.user.role,
-      submittedBy: isAnonymous ? req.user._id : req.user._id, // stored regardless
+      submittedBy: req.user._id,
     };
 
     // For sensitive anonymous submissions store identity separately
